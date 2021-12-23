@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "baseUrl": ".",
+    "paths": {
+      "@thinxview/ui/*": ["thinxview/components/*"],
+      "@thinxview/constants/*": ["thinxview/constants/*"],
+      "@thinxview/utils/*": ["thinxview/utils/*"],
+      "@thinxview/types/*": ["thinxview/types/*"],
+      "@thinxview/middlewares/*": ["thinxview/middlewares/*"],
+      "@thinxview/models/*": ["thinxview/models/*"],
+      "@thinxview/lib/*": ["thinxview/lib/*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "pages/admin/index.js",
+    "pages/index.js",
+    "pages/_app.js",
+    "pages/_document.js"
+  ],
+  "exclude": ["node_modules"]
+}

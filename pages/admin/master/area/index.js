@@ -1,16 +1,14 @@
 import React, { useMemo } from 'react';
 
-import { getSession } from 'next-auth/react';
+import { Columns } from '../../../../thinxview/data/Columns';
+import { Members } from '../../../../thinxview/data/Members';
 
 import MainLayout from '@thinxview/ui/layout/MainLayout';
 import BreadCrumb from '@thinxview/ui/BreadCrumb';
-import { Card, Col, Row } from 'reactstrap';
-import MembersTable from '../../../thinxview/components/MembersTable';
+import CommonTable from '../../../../thinxview/components/CommonTable';
+import { getSession } from 'next-auth/react';
 
-import { Columns } from '../../../thinxview/data/Columns';
-import { Members } from '../../../thinxview/data/Members';
-
-export default function MembersPage() {
+export default function Area() {
   const columns = useMemo(() => Columns, []);
   const data = useMemo(() => Members, []);
 
@@ -18,14 +16,14 @@ export default function MembersPage() {
     <>
       <MainLayout>
         <BreadCrumb
-          title={'Members List'}
+          title={'Areas List'}
           urls={[
             {
-              title: 'AdminHomePage',
+              title: 'Admin',
               path: '/admin',
             },
             {
-              title: 'MembersPage',
+              title: 'Area',
               path: null,
             },
           ]}
@@ -33,7 +31,7 @@ export default function MembersPage() {
 
         <section className="content">
           <div className="container">
-            <MembersTable columns={columns} data={data} />
+            <CommonTable columns={columns} data={data} href={'#'} />
           </div>
         </section>
       </MainLayout>

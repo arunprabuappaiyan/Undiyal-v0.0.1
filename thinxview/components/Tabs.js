@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { slugify } from '../utils/slugify';
 import {
   Col,
   Nav,
@@ -8,86 +9,53 @@ import {
   TabContent,
   TabPane,
 } from 'reactstrap';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
-export default function Tabs() {
-  const [toggleState, setToggleState] = useState('1');
+export default function Tabs({ children }) {
+  const [activeTab, setActiveTab] = useState(children[0].props.label);
+  const router = useRouter();
 
-  const toggleTab = (index) => {
-    setToggleState(index);
+  const handleClick = (e, newActiveTab) => {
+    e.preventDefault();
+    setActiveTab(newActiveTab);
   };
 
   return (
     <>
       <Nav
         tabs
+        fill
+        className="layout-navbar-fixed"
         style={{
           cursor: 'pointer',
         }}
       >
-        <NavItem>
-          <NavLink
-            className={toggleState == 1 ? 'active' : ''}
-            onClick={() => toggleTab('1')}
-          >
-            Subscription
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink
-            className={toggleState == 2 ? 'active' : ''}
-            onClick={() => toggleTab('2')}
-          >
-            Docs
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink
-            className={toggleState == 3 ? 'active' : ''}
-            onClick={() => toggleTab('3')}
-          >
-            Payment
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink
-            className={toggleState == 4 ? 'active' : ''}
-            onClick={() => toggleTab('4')}
-          >
-            Add Payment
-          </NavLink>
-        </NavItem>
+        {children.map((tab) => {
+          const label = tab.props.label;
+
+          return (
+            <>
+              <NavItem key={label}>
+                <NavLink
+                  className={label == activeTab ? 'active' : ''}
+                  onClick={(e) => handleClick(e, label)}
+                >
+                  {label}
+                </NavLink>
+              </NavItem>
+            </>
+          );
+        })}
       </Nav>
 
-      <TabContent activeTab={toggleState}>
-        <TabPane tabId="1">
-          <Row>
-            <Col sm="12">
-              <h4>Subscribe</h4>
-            </Col>
-          </Row>
-        </TabPane>
-        <TabPane tabId="2">
-          <Row>
-            <Col sm="12">
-              <h4>Doc</h4>
-            </Col>
-          </Row>
-        </TabPane>
-        <TabPane tabId="3">
-          <Row>
-            <Col sm="12">
-              <h4>Pay</h4>
-            </Col>
-          </Row>
-        </TabPane>
-        <TabPane tabId="4">
-          <Row>
-            <Col sm="12">
-              <h4>Add</h4>
-            </Col>
-          </Row>
-        </TabPane>
-      </TabContent>
+      {children.map((one) => {
+        if (one.props.label == activeTab) {
+          return (
+            <TabContent key={one.props.label}>{one.props.children}</TabContent>
+          );
+        }
+      })}
     </>
   );
 }

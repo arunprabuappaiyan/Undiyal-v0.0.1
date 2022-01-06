@@ -21,7 +21,7 @@ const AdminHome = () => {
         title={'Dashboard'}
         urls={[
           {
-            title: 'AdminHomePage',
+            title: 'Admin',
             path: null,
           },
         ]}
@@ -79,10 +79,11 @@ const AdminHome = () => {
               </Row>
             </CardHeader>
 
-            <CardBody>
+            <CardBody className="table-responsive">
               <CardTitle tag={'h5'} className="text-bold">
                 Statement
               </CardTitle>
+              <br />
             </CardBody>
 
             <CardFooter className="text-muted">Available Places</CardFooter>

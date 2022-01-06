@@ -13,8 +13,11 @@ import {
 } from 'reactstrap';
 import GlobalFilter from './GlobalFilter';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
-export default function MembersTable({ columns, data }) {
+export default function CommonTable({ columns, data, href }) {
+  const router = useRouter();
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -46,7 +49,7 @@ export default function MembersTable({ columns, data }) {
           <Card style={{ height: 580 }}>
             <CardHeader>
               <CardTitle>
-                <Link href="/admin/memberspage/registermember" passHref>
+                <Link href={href} passHref>
                   <Button size="sm" outline>
                     Create
                   </Button>
@@ -66,10 +69,10 @@ export default function MembersTable({ columns, data }) {
                 className="table-head-fixed text-nowrap table-hover"
               >
                 <thead>
-                  {headerGroups.map((headerGroup) => (
-                    <tr key={''} {...headerGroup.getHeaderGroupProps()}>
-                      {headerGroup.headers.map((column) => (
-                        <th key={''} {...column.getHeaderProps()}>
+                  {headerGroups.map((headerGroup, i) => (
+                    <tr key={i} {...headerGroup.getHeaderGroupProps()}>
+                      {headerGroup.headers.map((column, k) => (
+                        <th key={k} {...column.getHeaderProps()}>
                           {column.render('Header')}
                         </th>
                       ))}
@@ -77,12 +80,24 @@ export default function MembersTable({ columns, data }) {
                   ))}
                 </thead>
                 <tbody {...getTableBodyProps()}>
-                  {page.map((row) => {
+                  {page.map((row, index) => {
                     prepareRow(row);
                     return (
-                      <tr key={''} {...row.getRowProps()}>
-                        {row.cells.map((cell) => (
-                          <td key={''} {...cell.getCellProps()}>
+                      <tr
+                        key={index}
+                        {...row.getRowProps()}
+                        onClick={() => {
+                          router.push(
+                            `${router.pathname}/id=${row.values.id}`,
+                            undefined,
+                            {
+                              shallow: true,
+                            }
+                          );
+                        }}
+                      >
+                        {row.cells.map((cell, j) => (
+                          <td key={j} {...cell.getCellProps()}>
                             {cell.render('Cell')}
                           </td>
                         ))}

@@ -1,34 +1,37 @@
+import React, { useMemo } from 'react';
+
+import { Columns } from '../../../../thinxview/data/Columns';
+import { Members } from '../../../../thinxview/data/Members';
+
 import MainLayout from '@thinxview/ui/layout/MainLayout';
 import BreadCrumb from '@thinxview/ui/BreadCrumb';
-import SignUp from '@thinxview/ui/SignUp';
-
+import CommonTable from '../../../../thinxview/components/CommonTable';
 import { getSession } from 'next-auth/react';
 
-export default function RegisterMember() {
+export default function State(params) {
+  const columns = useMemo(() => Columns, []);
+  const data = useMemo(() => Members, []);
+
   return (
     <>
       <MainLayout>
         <BreadCrumb
-          title={'New Registration'}
+          title={'States List'}
           urls={[
             {
-              title: 'AdminHomePage',
+              title: 'Admin',
               path: '/admin',
             },
             {
-              title: 'MembersPage',
-              path: '/admin/memberspage',
-            },
-            {
-              title: 'RegisterPage',
+              title: 'State',
               path: null,
             },
           ]}
         />
 
-        <section className="content text-sm">
-          <div className="container-fluid">
-            <SignUp />
+        <section className="content">
+          <div className="container">
+            <CommonTable columns={columns} data={data} href={'#'} />
           </div>
         </section>
       </MainLayout>

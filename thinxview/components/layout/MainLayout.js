@@ -4,10 +4,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { signOut } from 'next-auth/react';
 import {
-  UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+  Dropdown,
   Navbar,
   NavbarBrand,
   NavbarToggler,
@@ -63,11 +63,14 @@ const MainNavBar = (props) => {
         }
       >
         <div className={'container'}>
-          <Link href="/" passHref>
+          <Link href="/">
             <NavbarBrand>
               <img
                 src={GLOBAL_CONFIGURATION.APP_LOGO}
                 className="brand-image"
+                style={{
+                  cursor: 'pointer',
+                }}
               />
             </NavbarBrand>
           </Link>
@@ -80,8 +83,13 @@ const MainNavBar = (props) => {
                   return <CustomNavigationItem item={item} key={index} />;
                 }
                 return (
-                  <NavItem key={index}>
-                    <Link href={`${item.path}`} passHref>
+                  <NavItem
+                    key={index}
+                    style={{
+                      cursor: 'pointer',
+                    }}
+                  >
+                    <Link href={`${item.path}`}>
                       <NavLink>{item.title}</NavLink>
                     </Link>
                   </NavItem>
@@ -105,13 +113,11 @@ const CustomNavigationItem = (props) => {
   const { item } = props;
   const [isOpen, updateIsOpen] = useState(false);
 
-  //console.log('MAIN ITEM', item);
-
   return (
-    <UncontrolledDropdown
-      inNavbar
-      nav
+    <Dropdown
       {...props}
+      tag={'li'}
+      className={'nav-item'}
       onClick={() => updateIsOpen(true)}
       onFocus={() => updateIsOpen(true)}
       onBlur={() => updateIsOpen(false)}
@@ -119,8 +125,9 @@ const CustomNavigationItem = (props) => {
       isOpen={isOpen}
     >
       <DropdownToggle
+        tag={'div'}
+        className={'nav-link'}
         caret
-        nav
         style={{
           cursor: 'pointer',
         }}
@@ -128,7 +135,7 @@ const CustomNavigationItem = (props) => {
         {item.title}
       </DropdownToggle>
 
-      <DropdownMenu end>
+      <DropdownMenu tag={'ul'} className={'border-0 shadow'}>
         {item?.childrens.map((mainItem, index) => {
           if (Array.isArray(mainItem)) {
             return (
@@ -136,7 +143,7 @@ const CustomNavigationItem = (props) => {
                 {mainItem.map((groupItem, gIndex) => {
                   return (
                     <>
-                      <DropdownItem key={gIndex}>
+                      <DropdownItem tag={'div'} key={gIndex}>
                         <Link href={groupItem.path}>
                           <a className={'text-dark'}> {groupItem.title}</a>
                         </Link>
@@ -153,7 +160,7 @@ const CustomNavigationItem = (props) => {
 
           return (
             <li key={index}>
-              <DropdownItem>
+              <DropdownItem tag={'div'}>
                 <Link href={mainItem.path}>
                   <a className={'text-dark'}> {mainItem.title}</a>
                 </Link>
@@ -161,8 +168,17 @@ const CustomNavigationItem = (props) => {
             </li>
           );
         })}
+
+        {/* Leave 2 not implemented */}
+        {/* <li className="dropdown-divider"></li>
+                    <li class="dropdown-submenu dropdown-hover">
+                            <a href={"#"} className={"dropdown-item dropdown-toggle"}>Hover for action</a>
+                              <ul className={"dropdown-menu border-0 shadow"}>
+                            <li><a tabindex="-1" href="#" className="dropdown-item">level 2</a></li>
+                      </ul>
+                   </li> */}
       </DropdownMenu>
-    </UncontrolledDropdown>
+    </Dropdown>
   );
 };
 

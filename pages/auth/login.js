@@ -13,6 +13,7 @@ function Login({ router }) {
     setIsLoading(true);
 
     try {
+      console.log(values);
       const response = await signIn('credentials', {
         ...values,
         redirect: false,

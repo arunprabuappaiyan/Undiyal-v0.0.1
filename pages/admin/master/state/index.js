@@ -31,7 +31,11 @@ export default function State(params) {
 
         <section className="content">
           <div className="container">
-            <CommonTable columns={columns} data={data} href={'#'} />
+            <CommonTable
+              columns={columns}
+              data={data}
+              href={'/admin/master/state/create'}
+            />
           </div>
         </section>
       </MainLayout>

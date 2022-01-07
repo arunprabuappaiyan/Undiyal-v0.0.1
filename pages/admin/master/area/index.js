@@ -31,7 +31,11 @@ export default function Area() {
 
         <section className="content">
           <div className="container">
-            <CommonTable columns={columns} data={data} href={'#'} />
+            <CommonTable
+              columns={columns}
+              data={data}
+              href={'/admin/master/area/create'}
+            />
           </div>
         </section>
       </MainLayout>

@@ -31,7 +31,11 @@ export default function City() {
 
         <section className="content">
           <div className="container">
-            <CommonTable columns={columns} data={data} href={'#'} />
+            <CommonTable
+              columns={columns}
+              data={data}
+              href={'/admin/master/city/create'}
+            />
           </div>
         </section>
       </MainLayout>

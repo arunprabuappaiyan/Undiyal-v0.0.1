@@ -30,6 +30,7 @@ export const Schema = Yup.object().shape({
   dateOfBirth: Yup.date().required('Enter Date Of Birth'),
   addressLine1: Yup.string().required('Enter Your Address'),
   addressLine2: Yup.string().required('Enter Your Address'),
+  country: Yup.string().required('Select your country'),
   state: Yup.string().required('Select your State'),
   city: Yup.string().required('Select your city'),
   pinCode: Yup.number().required('Enter your pincode'),
@@ -38,7 +39,13 @@ export const Schema = Yup.object().shape({
 
 const SignUpFormFormik = () => {
   const [filteredCity, setFilteredCity] = useState([]);
+  const [filteredState, setFilteredState] = useState([]);
 
+  function filterStateValues(country) {
+    let tempState = States.filter((state) => state.countryId === country);
+
+    setFilteredState(tempState);
+  }
   function filterCityValues(state) {
     let tempCity = Cities.filter((city) => city.stateId === state);
 
@@ -57,6 +64,8 @@ const SignUpFormFormik = () => {
           dateOfBirth: '',
           addressLine1: '',
           addressLine2: '',
+          country: '',
+          countryName: '',
           state: '',
           stateName: '',
           city: '',
@@ -67,6 +76,9 @@ const SignUpFormFormik = () => {
         onSubmit={(values, { resetForm }) => {
           console.log(values);
 
+          values.countryName = Countries.filter(
+            (country) => country.id == values.country
+          )[0].name;
           values.stateName = States.filter(
             (state) => state.id == values.state
           )[0].name;
@@ -215,8 +227,40 @@ const SignUpFormFormik = () => {
                         />
                       </div>
                     </div>
-                    <div className="row g-3">
-                      <div className="col-sm mb-4 height-60">
+                    <div className="row g-2">
+                      <div className="col-sm-5 mb-4 height-60">
+                        <label className="form-label">Country</label>
+                        <Field
+                          as="select"
+                          name="country"
+                          className={
+                            errors.country && touched.country
+                              ? 'form-control is-invalid'
+                              : 'form-control'
+                          }
+                          onChange={(e) => {
+                            setFieldValue('country', e.target.value);
+                            setFieldValue('state', '');
+                            filterStateValues(e.target.value);
+                          }}
+                        >
+                          <option value="" hidden>
+                            Select Country
+                          </option>
+                          {Countries.map((option) => (
+                            <option key={option.id} value={option.id}>
+                              {option.name}
+                            </option>
+                          ))}
+                        </Field>
+
+                        <ErrorMessage
+                          name="country"
+                          component="span"
+                          className="error"
+                        />
+                      </div>
+                      <div className="col-sm-5 mb-4 height-60">
                         <label className="form-label">State</label>
 
                         <Field
@@ -236,7 +280,7 @@ const SignUpFormFormik = () => {
                           <option value="" hidden>
                             Select State
                           </option>
-                          {States.map((option) => (
+                          {filteredState.map((option) => (
                             <option key={option.id} value={option.id}>
                               {option.name}
                             </option>
@@ -249,7 +293,9 @@ const SignUpFormFormik = () => {
                           className="error"
                         />
                       </div>
-                      <div className="col-sm mb-4 height-60 ">
+                    </div>
+                    <div className="row g-2">
+                      <div className="col-sm-5 mb-4 height-60 ">
                         <label className="form-label">City</label>
 
                         <Field
@@ -301,7 +347,7 @@ const SignUpFormFormik = () => {
                     </div>
 
                     <div className="row g-2">
-                      <div className="col-md mt-3 height-60">
+                      <div className="col-md-5 mt-3 height-60">
                         <div>
                           <div>
                             <label className="form-label">Gender</label>
@@ -340,7 +386,7 @@ const SignUpFormFormik = () => {
                           className="error"
                         />
                       </div>
-                      <div className="col-sm-6 mt-3 height-60 ">
+                      <div className="col-sm-4 mt-3 height-60 ">
                         <label className="form-label">Date Of Birth</label>
                         <Field
                           type="date"
@@ -379,18 +425,66 @@ const SignUpFormFormik = () => {
   );
 };
 
+const Countries = [
+  {
+    id: 'IND',
+    name: 'India',
+  },
+  {
+    id: 'USA',
+    name: 'United States Of America',
+  },
+  {
+    id: 'GER',
+    name: 'Germany',
+  },
+];
+
 const States = [
   {
     id: 'TN',
     name: 'Tamilnadu',
+    countryId: 'IND',
   },
   {
     id: 'KA',
     name: 'Karnataka',
+    countryId: 'IND',
   },
   {
     id: 'TL',
     name: 'Telangana',
+    countryId: 'IND',
+  },
+  {
+    id: 'WDC',
+    name: 'WashintonDC',
+    countryId: 'USA',
+  },
+  {
+    id: 'BR',
+    name: 'Brooklyn',
+    countryId: 'USA',
+  },
+  {
+    id: 'SA',
+    name: 'Southren',
+    countryId: 'USA',
+  },
+  {
+    id: 'NZ',
+    name: 'Nazis',
+    countryId: 'GER',
+  },
+  {
+    id: 'GM',
+    name: 'Genarel',
+    countryId: 'GER',
+  },
+  {
+    id: 'HT',
+    name: 'Hitler',
+    countryId: 'GER',
   },
 ];
 
@@ -429,6 +523,101 @@ const Cities = [
     id: 'WA',
     name: 'Warangal',
     stateId: 'TL',
+  },
+  {
+    id: 'AP',
+    name: 'Appos',
+    stateId: 'WDC',
+  },
+  {
+    id: 'IP',
+    name: 'Ippos',
+    stateId: 'WDC',
+  },
+  {
+    id: 'YP',
+    name: 'Yeppos',
+    stateId: 'WDC',
+  },
+  {
+    id: 'N',
+    name: 'Nah',
+    stateId: 'BR',
+  },
+  {
+    id: 'Y',
+    name: 'Yea',
+    stateId: 'BR',
+  },
+  {
+    id: 'S',
+    name: 'Shh',
+    stateId: 'BR',
+  },
+  {
+    id: 'A',
+    name: 'Ahh',
+    stateId: 'SA',
+  },
+  {
+    id: 'SU',
+    name: 'Sudds',
+    stateId: 'SA',
+  },
+  {
+    id: 'POD',
+    name: 'Podds',
+    stateId: 'SA',
+  },
+  {
+    id: 'MD',
+    name: 'Mods',
+    stateId: 'NZ',
+  },
+  {
+    id: 'UZ',
+    name: 'Uzzz',
+    stateId: 'NZ',
+  },
+  {
+    id: 'XX',
+    name: 'Xmen',
+    stateId: 'NZ',
+  },
+  {
+    id: 'SPI',
+    name: 'Spidi',
+    stateId: 'GM',
+  },
+  {
+    id: 'IR',
+    name: 'Iron',
+    stateId: 'GM',
+  },
+  {
+    id: 'CP',
+    name: 'Captan',
+    stateId: 'GM',
+  },
+  {
+    id: 'AT',
+    name: 'Ant',
+    stateId: 'GM',
+  },
+  {
+    id: 'HU',
+    name: 'Hulk',
+    stateId: 'HT',
+  },
+  {
+    id: 'WA',
+    name: 'Wale',
+    stateId: 'HT',
+  },
+  {
+    id: 'LE',
+    name: 'Leomord',
+    stateId: 'HT',
   },
 ];
 

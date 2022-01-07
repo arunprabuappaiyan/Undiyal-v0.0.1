@@ -32,7 +32,11 @@ export default function Country() {
 
         <section className="content">
           <div className="container">
-            <CommonTable columns={columns} data={data} href={'#'} />
+            <CommonTable
+              columns={columns}
+              data={data}
+              href={'/admin/master/country/create'}
+            />
           </div>
         </section>
       </MainLayout>

@@ -30,10 +30,6 @@ export default function MainLayout({ children }) {
             content={GLOBAL_CONFIGURATION.APPLICATION_DESCRIPTION}
           />
           <link rel="icon" href="/favicon.ico" />
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"
-          ></link>
         </Head>
         <MainNavBar />
         <div className={'content-wrapper'}>{children}</div>
@@ -63,14 +59,14 @@ const MainNavBar = (props) => {
         }
       >
         <div className={'container'}>
-          <Link href="/">
+          <Link href="/" passHref>
             <NavbarBrand>
-              <img
+              <Image
                 src={GLOBAL_CONFIGURATION.APP_LOGO}
+                width={115}
+                height={38}
+                alt="NEKHOP-logo"
                 className="brand-image"
-                style={{
-                  cursor: 'pointer',
-                }}
               />
             </NavbarBrand>
           </Link>
@@ -78,18 +74,18 @@ const MainNavBar = (props) => {
           <NavbarToggler className="me-2" onClick={() => setActive(!active)} />
           <Collapse navbar isOpen={active}>
             <Nav navbar className="me-auto">
-              {MAIN_MENU.map((item, index) => {
+              {MAIN_MENU.map((item) => {
                 if (item.childrens.length > 0) {
-                  return <CustomNavigationItem item={item} key={index} />;
+                  return <CustomNavigationItem item={item} />;
                 }
                 return (
                   <NavItem
-                    key={index}
+                    key={item.id}
                     style={{
                       cursor: 'pointer',
                     }}
                   >
-                    <Link href={`${item.path}`}>
+                    <Link href={`${item.path}`} passHref>
                       <NavLink>{item.title}</NavLink>
                     </Link>
                   </NavItem>
@@ -137,17 +133,18 @@ const CustomNavigationItem = (props) => {
 
       <DropdownMenu tag={'ul'} className={'border-0 shadow'}>
         {item?.childrens.map((mainItem, index) => {
+          //console.log(mainItem);
           if (Array.isArray(mainItem)) {
             return (
               <>
                 {mainItem.map((groupItem, gIndex) => {
                   return (
                     <>
-                      <DropdownItem tag={'div'} key={gIndex}>
-                        <Link href={groupItem.path}>
-                          <a className={'text-dark'}> {groupItem.title}</a>
+                      <li key={gIndex} className={'text-dark'}>
+                        <Link href={groupItem.path} passHref>
+                          <DropdownItem>{groupItem.title}</DropdownItem>
                         </Link>
-                      </DropdownItem>
+                      </li>
                     </>
                   );
                 })}
@@ -159,12 +156,10 @@ const CustomNavigationItem = (props) => {
           }
 
           return (
-            <li key={index}>
-              <DropdownItem tag={'div'}>
-                <Link href={mainItem.path}>
-                  <a className={'text-dark'}> {mainItem.title}</a>
-                </Link>
-              </DropdownItem>
+            <li key={index} className={'text-dark'}>
+              <Link href={mainItem.path} passHref>
+                <DropdownItem>{mainItem.title}</DropdownItem>
+              </Link>
             </li>
           );
         })}

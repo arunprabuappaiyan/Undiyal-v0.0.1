@@ -1,10 +1,19 @@
 import MainLayout from '@thinxview/ui/layout/MainLayout';
 import BreadCrumb from '@thinxview/ui/BreadCrumb';
 import { getSession } from 'next-auth/react';
-import { Card, CardBody, Col, Row, TabContent, TabPane } from 'reactstrap';
+import {
+  Card,
+  CardBody,
+  CardText,
+  Col,
+  Row,
+  TabContent,
+  TabPane,
+} from 'reactstrap';
 import Tabs from '../../../../thinxview/components/Tabs';
 import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 export default function MemberProfile() {
   return (
@@ -38,15 +47,17 @@ export default function MemberProfile() {
                     className="align-items-stretch d-flex flex-column"
                   >
                     <Card
-                      style={{ height: 250 }}
+                      style={{ height: 230 }}
                       className="bg-light d-flex flex-fill"
                     >
                       <CardBody className="pt-0 table-responsive">
                         <Row>
                           <Col sm="3" className="text-center mt-4">
-                            <img
-                              src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/128x128/fire.png"
+                            <Image
+                              src="/fire.png"
                               alt="member-avatar"
+                              width={128}
+                              height={128}
                               className="img-circle img-fluid"
                             />
                           </Col>
@@ -54,7 +65,7 @@ export default function MemberProfile() {
                             <h4 className="mb-0 ">Arun Prabu A</h4>
                             <small>individual</small>
                             <br />
-                            <ul className="ml-4 mb-0 fa-ul text-muted">
+                            <ul className="ml-4 mb-0 fa-ul text-muted mt-2">
                               <li className="small">
                                 <span className="fa-li">
                                   <i className="fas fa-envelope"></i>
@@ -96,26 +107,86 @@ export default function MemberProfile() {
                     className="align-items-stretch d-flex flex-column"
                   >
                     <Card
-                      style={{ height: 300 }}
+                      style={{ height: 200 }}
                       className="bg-light d-flex flex-fill"
                     >
                       <CardBody className="table-responsive">
                         <Tabs>
                           <TabPane label="Subscribe">
-                            <h4>Subscribe</h4>
-                            <p>Arun Prabu 1</p>
+                            <Row className="container g-2 mt-4">
+                              <Col sm>
+                                <CardText>Subscribed at : qwertyy</CardText>
+                              </Col>
+                              <Col sm>
+                                <CardText>Amount : qwsdaf</CardText>
+                              </Col>
+                            </Row>
+                            <Row className="container g-2 mt-4">
+                              <Col sm>
+                                <CardText>
+                                  Subscription Type : oidoanoc
+                                </CardText>
+                              </Col>
+                              <Col sm>
+                                <CardText>Next Due : ovnosudon</CardText>
+                              </Col>
+                            </Row>
                           </TabPane>
                           <TabPane label="Docs">
-                            <h4>Docs</h4>
-                            <p>Arun Prabu 2</p>
+                            <Row className="container g-2 mt-4">
+                              <Col sm>
+                                <CardText>Status : Verified</CardText>
+                              </Col>
+                              <Col sm>
+                                <CardText>Amount : Paid</CardText>
+                              </Col>
+                            </Row>
+                            <Row className="container g-2 mt-4">
+                              <Col sm>
+                                <CardText>Subscription Type : No</CardText>
+                              </Col>
+                              <Col sm>
+                                <CardText>Next Due : Soon</CardText>
+                              </Col>
+                            </Row>
                           </TabPane>
                           <TabPane label="Payment">
-                            <h4>Payment</h4>
-                            <p>Arun Prabu 3</p>
+                            <Row className="container g-2 mt-4">
+                              <Col sm>
+                                <CardText>Subscribed at : qwertyy</CardText>
+                              </Col>
+                              <Col sm>
+                                <CardText>Amount : qwsdaf</CardText>
+                              </Col>
+                            </Row>
+                            <Row className="container g-2 mt-4">
+                              <Col sm>
+                                <CardText>
+                                  Subscription Type : oidoanoc
+                                </CardText>
+                              </Col>
+                              <Col sm>
+                                <CardText>Next Due : ovnosudon</CardText>
+                              </Col>
+                            </Row>
                           </TabPane>
-                          <TabPane label="Add Payment">
-                            <h4>Add Payment</h4>
-                            <p>Arun Prabu 4</p>
+                          <TabPane label="AddPayment">
+                            <Row className="container g-2 mt-4">
+                              <Col sm>
+                                <CardText>Status : Verified</CardText>
+                              </Col>
+                              <Col sm>
+                                <CardText>Amount : Paid</CardText>
+                              </Col>
+                            </Row>
+                            <Row className="container g-2 mt-4">
+                              <Col sm>
+                                <CardText>Subscription Type : No</CardText>
+                              </Col>
+                              <Col sm>
+                                <CardText>Next Due : Soon</CardText>
+                              </Col>
+                            </Row>
                           </TabPane>
                         </Tabs>
                       </CardBody>

@@ -7,13 +7,13 @@ export default function BreadCrumb(props) {
       <section className="content-header">
         <div className="container">
           <Row className="mb-2">
-            <Col sm-6>
+            <Col sm>
               <h1 className="m-0">
                 {props?.title} <small>{props?.smallTitle}</small>
               </h1>
             </Col>
 
-            <Col sm-6>
+            <Col sm>
               <ol className="breadcrumb float-sm-right">
                 {props.urls &&
                   props.urls.map((menu, index) => {

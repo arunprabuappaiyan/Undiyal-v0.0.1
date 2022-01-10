@@ -10,10 +10,6 @@ export default function PublicLayout({ children }) {
           <title>Login Page</title>
           <meta name="description" content="Login" />
           <link rel="icon" href="/favicon.ico" />
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"
-          ></link>
         </Head>
 
         <div className={'content-wrapper'}>{children}</div>
@@ -36,7 +32,10 @@ const MainNavBar = () => {
           <Link href={`/`}>
             <a className="navbar-brand">
               <Image
-                src="http://gndsolutions.in/wp-content/uploads/2020/09/GND-Solutions-Blue-transparent_logo.png"
+                src={GLOBAL_CONFIGURATION.APP_LOGO}
+                width={115}
+                height={38}
+                alt="NEKHOP-logo"
                 className="brand-image"
               />
             </a>
@@ -99,11 +98,17 @@ const AppFooter = () => {
   return (
     <>
       <footer className="main-footer">
-        <div className="float-right d-none d-sm-inline">version 1.0 beta</div>
+        <div className="float-right d-none d-sm-inline">
+          version {GLOBAL_CONFIGURATION.VERSION_NAME}
+        </div>
+
         <strong>
-          Copyright &copy;<a href="https://gndsolutions.in">GND Solutions</a>.
-        </strong>{' '}
-        All rights reserved.
+          Copyright ©
+          <a href={GLOBAL_CONFIGURATION.COPYRIGHTS.url}>
+            {GLOBAL_CONFIGURATION.COPYRIGHTS.name}
+          </a>
+          .
+        </strong>
       </footer>
     </>
   );

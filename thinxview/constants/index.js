@@ -1,5 +1,5 @@
 export const GLOBAL_CONFIGURATION = {
-  APP_LOGO: 'http://nekhop.com/img/logo-white.png',
+  APP_LOGO: '/logo-white.png',
   APPLICATION_TITLE: 'Management Console',
   APPLICATION_DESCRIPTION: 'Application Management',
   COPYRIGHTS: {

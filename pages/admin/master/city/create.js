@@ -1,17 +1,27 @@
+import React, { useState } from 'react';
 import MainLayout from '@thinxview/ui/layout/MainLayout';
 import BreadCrumb from '@thinxview/ui/BreadCrumb';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { Button } from 'reactstrap';
 import * as Yup from 'yup';
 import { getSession } from 'next-auth/react';
+import { Countries, States } from '../../../../thinxview/components/SignUp';
 
 const Schema = Yup.object().shape({
-  countryName: Yup.string().required('Select your country name'),
-  stateName: Yup.string().required('Select your state name'),
-  cityName: Yup.string().required('Enter your city name'),
+  countryName: Yup.string().required('Select country name'),
+  stateName: Yup.string().required('Select state name'),
+  cityName: Yup.string().required('Enter city name'),
 });
 
-export default function CreateCity(params) {
+export default function CreateCity() {
+  const [filteredState, setFilteredState] = useState([]);
+
+  function filterStateValues(country) {
+    let tempState = States.filter((state) => state.countryId === country);
+
+    setFilteredState(tempState);
+  }
+
   return (
     <>
       <MainLayout>
@@ -83,17 +93,22 @@ export default function CreateCity(params) {
                                         ? 'form-control is-invalid'
                                         : 'form-control'
                                     }
+                                    onChange={(e) => {
+                                      setFieldValue(
+                                        'countryName',
+                                        e.target.value
+                                      );
+                                      filterStateValues(e.target.value);
+                                    }}
                                   >
                                     <option value="" hidden>
                                       Select Country
                                     </option>
-                                    <option value="india">India</option>
-                                    <option value="unitedstates">
-                                      United States
-                                    </option>
-                                    <option value="unitedarabemirates">
-                                      United Arab Emirates
-                                    </option>
+                                    {Countries.map((option) => (
+                                      <option key={option.id} value={option.id}>
+                                        {option.name}
+                                      </option>
+                                    ))}
                                   </Field>
                                   <ErrorMessage
                                     name="countryName"
@@ -117,11 +132,11 @@ export default function CreateCity(params) {
                                     <option value="" hidden>
                                       Select State
                                     </option>
-                                    <option value="tamilnadu">
-                                      Tamil Nadu
-                                    </option>
-                                    <option value="karnataka">Karnataka</option>
-                                    <option value="kerala">Kerala</option>
+                                    {filteredState.map((option) => (
+                                      <option key={option.id} value={option.id}>
+                                        {option.name}
+                                      </option>
+                                    ))}
                                   </Field>
                                   <ErrorMessage
                                     name="stateName"

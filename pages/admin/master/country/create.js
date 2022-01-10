@@ -6,9 +6,9 @@ import * as Yup from 'yup';
 import { getSession } from 'next-auth/react';
 
 const Schema = Yup.object().shape({
-  countryName: Yup.string().required('Enter your country name'),
-  countryCode: Yup.string().required('Enter your country code'),
-  phoneCode: Yup.number().required('Enter your phonecode'),
+  countryName: Yup.string().required('Enter country name'),
+  countryCode: Yup.string().required('Enter country code'),
+  phoneCode: Yup.number().required('Enter phonecode'),
 });
 
 export default function CreateCountry() {

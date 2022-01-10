@@ -648,3 +648,5 @@ export async function getServerSideProps(context) {
     props: {},
   };
 }
+
+export { Countries, States, Cities };

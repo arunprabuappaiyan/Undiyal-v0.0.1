@@ -4,10 +4,11 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { Button } from 'reactstrap';
 import * as Yup from 'yup';
 import { getSession } from 'next-auth/react';
+import { Countries } from '../../../../thinxview/components/SignUp';
 
 const Schema = Yup.object().shape({
-  countryName: Yup.string().required('Select your country name'),
-  stateName: Yup.string().required('Enter your state name'),
+  countryName: Yup.string().required('Select country name'),
+  stateName: Yup.string().required('Enter state name'),
 });
 
 export default function CreateState(params) {
@@ -82,13 +83,14 @@ export default function CreateState(params) {
                                     <option value="" hidden>
                                       Select Country
                                     </option>
-                                    <option value="india">India</option>
-                                    <option value="unitedstates">
-                                      United States
-                                    </option>
-                                    <option value="unitedarabemirates">
-                                      United Arab Emirates
-                                    </option>
+                                    {Countries.map((option) => (
+                                      <option
+                                        key={option.id}
+                                        value={option.name}
+                                      >
+                                        {option.name}
+                                      </option>
+                                    ))}
                                   </Field>
                                   <ErrorMessage
                                     name="countryName"

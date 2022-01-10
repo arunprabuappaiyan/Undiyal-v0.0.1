@@ -4,6 +4,7 @@ import { signIn, getSession } from 'next-auth/react';
 import { Formik, Form, Field } from 'formik';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import Image from 'next/image';
 
 function Login({ router }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -58,9 +59,11 @@ function Login({ router }) {
       <div className="login-box">
         <div className="card card-outline card-primary">
           <div className="card-header text-center">
-            <img
-              src="http://nekhop.com/img/logo-white.png"
+            <Image
+              alt="NEKHOP-logo"
+              src="/logo-white.png"
               width={180}
+              height={57}
               className="brand-image"
             />
           </div>

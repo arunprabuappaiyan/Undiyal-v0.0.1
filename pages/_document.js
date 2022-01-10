@@ -1,4 +1,5 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document';
+import Link from 'next/link';
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -10,7 +11,12 @@ class MyDocument extends Document {
     if (this.props.__NEXT_DATA__.page.startsWith('/admin')) {
       return (
         <Html>
-          <Head />
+          <Head>
+            <link
+              href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=optional"
+              rel="stylesheet"
+            />
+          </Head>
           <body
             className={
               'hold-transition layout-top-nav layout-navbar-fixed layout-footer-fixed'

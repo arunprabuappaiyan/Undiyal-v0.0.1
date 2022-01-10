@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { slugify } from '../utils/slugify';
 import {
   Col,
@@ -13,12 +13,23 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 export default function Tabs({ children }) {
-  const [activeTab, setActiveTab] = useState(children[0].props.label);
+  const [activeTab, setActiveTab] = useState();
   const router = useRouter();
+
+  useMemo(() => {
+    if (router.query.tab) {
+      setActiveTab(router.query.tab);
+    } else {
+      setActiveTab('Subscribe');
+    }
+  }, [router.query.tab]);
 
   const handleClick = (e, newActiveTab) => {
     e.preventDefault();
-    setActiveTab(newActiveTab);
+
+    router.push(
+      `/admin/members/${router.query.mid}?tab=${slugify(newActiveTab)}`
+    );
   };
 
   return (

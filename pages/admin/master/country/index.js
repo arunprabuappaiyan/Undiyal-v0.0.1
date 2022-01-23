@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 
-import { Columns } from '../../../../thinxview/data/Columns';
-import { Members } from '../../../../thinxview/data/Members';
+import { Columns } from '../../../../data/Columns';
+import { Members } from '../../../../data/Members';
 
 import MainLayout from '@thinxview/ui/layout/MainLayout';
 import BreadCrumb from '@thinxview/ui/BreadCrumb';
@@ -10,8 +10,44 @@ import { getSession } from 'next-auth/react';
 import CommonTable from '../../../../thinxview/components/CommonTable';
 
 export default function Country() {
-  const columns = useMemo(() => Columns, []);
-  const data = useMemo(() => Members, []);
+  const columns = useMemo(
+    () => [
+      {
+        Header: 'Id',
+        accessor: 'id',
+      },
+      {
+        Header: 'Country Name',
+        accessor: 'country',
+      },
+      {
+        Header: 'Country Code',
+        accessor: 'countrycode',
+      },
+      {
+        Header: 'Phone Code',
+        accessor: 'phonecode',
+      },
+    ],
+    []
+  );
+  const data = useMemo(
+    () => [
+      {
+        id: 1,
+        country: 'INDIA',
+        countrycode: 'IND',
+        phonecode: '+91',
+      },
+      {
+        id: 2,
+        country: 'Germany',
+        countrycode: 'GER',
+        phonecode: '+123',
+      },
+    ],
+    []
+  );
 
   return (
     <>

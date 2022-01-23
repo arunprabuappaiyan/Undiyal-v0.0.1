@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 
-import { Columns } from '../../../../thinxview/data/Columns';
-import { Members } from '../../../../thinxview/data/Members';
+import { Columns } from '../../../../data/Columns';
+import { Members } from '../../../../data/Members';
 
 import MainLayout from '@thinxview/ui/layout/MainLayout';
 import BreadCrumb from '@thinxview/ui/BreadCrumb';
@@ -9,8 +9,8 @@ import CommonTable from '../../../../thinxview/components/CommonTable';
 import { getSession } from 'next-auth/react';
 
 export default function Recived(params) {
-  const columns = useMemo(() => Columns, []);
-  const data = useMemo(() => Members, []);
+  const columns = useMemo(() => [], []);
+  const data = useMemo(() => [], []);
 
   return (
     <>

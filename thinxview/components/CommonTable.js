@@ -88,7 +88,7 @@ export default function CommonTable({ columns, data, href }) {
                         {...row.getRowProps()}
                         onClick={() => {
                           router.push(
-                            `${router.pathname}/${row.values.id}?tab=Subscribe`,
+                            `${router.pathname}/${row.values.id}`,
                             undefined,
                             {
                               shallow: true,

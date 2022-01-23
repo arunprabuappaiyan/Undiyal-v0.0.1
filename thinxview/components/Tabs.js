@@ -27,9 +27,7 @@ export default function Tabs({ children }) {
   const handleClick = (e, newActiveTab) => {
     e.preventDefault();
 
-    router.push(
-      `/admin/members/${router.query.mid}?tab=${slugify(newActiveTab)}`
-    );
+    router.push(`/admin/members/${router.query.mid}?tab=${newActiveTab}`);
   };
 
   return (

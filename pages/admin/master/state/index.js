@@ -8,7 +8,7 @@ import BreadCrumb from '@thinxview/ui/BreadCrumb';
 import CommonTable from '../../../../thinxview/components/CommonTable';
 import { getSession } from 'next-auth/react';
 
-export default function State(params) {
+export default function State({ data }) {
   const columns = useMemo(
     () => [
       {
@@ -21,26 +21,26 @@ export default function State(params) {
       },
       {
         Header: 'State Name',
-        accessor: 'statename',
+        accessor: 'state',
       },
     ],
     []
   );
-  const data = useMemo(
-    () => [
-      {
-        id: 1,
-        country: 'INDIA',
-        statename: 'TamilNadu',
-      },
-      {
-        id: 2,
-        country: 'INDIA',
-        statename: 'Kerala',
-      },
-    ],
-    []
-  );
+  // const data = useMemo(
+  //   () => [
+  //     {
+  //       id: 1,
+  //       country: 'INDIA',
+  //       statename: 'TamilNadu',
+  //     },
+  //     {
+  //       id: 2,
+  //       country: 'INDIA',
+  //       statename: 'Kerala',
+  //     },
+  //   ],
+  //   []
+  // );
 
   return (
     <>
@@ -74,6 +74,9 @@ export default function State(params) {
 }
 
 export async function getServerSideProps(context) {
+  const response = await fetch('http://localhost:4000/members');
+  const data = await response.json();
+
   const session = await getSession({ req: context.req });
   if (!session) {
     return {
@@ -85,6 +88,8 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: {},
+    props: {
+      data,
+    },
   };
 }

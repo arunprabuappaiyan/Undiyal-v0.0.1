@@ -50,8 +50,8 @@ export default function CommonTable({ columns, data, href }) {
             <CardHeader>
               <CardTitle>
                 <Link href={href} passHref>
-                  <Button size="sm" outline>
-                    Create
+                  <Button color="info" style={{ borderRadius: '12px' }}>
+                    <i className="fa fa-plus"></i>
                   </Button>
                 </Link>
               </CardTitle>
@@ -83,25 +83,40 @@ export default function CommonTable({ columns, data, href }) {
                   {page.map((row, index) => {
                     prepareRow(row);
                     return (
-                      <tr
-                        key={index}
-                        {...row.getRowProps()}
-                        onClick={() => {
-                          router.push(
-                            `${router.pathname}/${row.values.id}`,
-                            undefined,
-                            {
-                              shallow: true,
-                            }
-                          );
-                        }}
-                      >
-                        {row.cells.map((cell, j) => (
-                          <td key={j} {...cell.getCellProps()}>
-                            {cell.render('Cell')}
-                          </td>
-                        ))}
-                      </tr>
+                      <>
+                        <tr
+                          key={index}
+                          {...row.getRowProps()}
+                          onClick={() => {
+                            router.push(
+                              `${router.pathname}/${row.values.id}`,
+                              undefined,
+                              {
+                                shallow: true,
+                              }
+                            );
+                          }}
+                        >
+                          {row.cells.map((cell, j) => (
+                            <>
+                              <td key={j} {...cell.getCellProps()}>
+                                {cell.render('Cell')}
+                              </td>
+                              {/* <td>
+                                <Button
+                                  size="sm"
+                                  color="danger"
+                                  outline
+                                  style={{ borderRadius: '50%' }}
+                                  className="me-2 mt-1"
+                                >
+                                  <i className="fas fa-trash"></i>
+                                </Button>
+                              </td> */}
+                            </>
+                          ))}
+                        </tr>
+                      </>
                     );
                   })}
                 </tbody>

@@ -9,7 +9,7 @@ import BreadCrumb from '@thinxview/ui/BreadCrumb';
 import { getSession } from 'next-auth/react';
 import CommonTable from '../../../../thinxview/components/CommonTable';
 
-export default function Country() {
+export default function Country({ data }) {
   const columns = useMemo(
     () => [
       {
@@ -20,34 +20,34 @@ export default function Country() {
         Header: 'Country Name',
         accessor: 'country',
       },
-      {
-        Header: 'Country Code',
-        accessor: 'countrycode',
-      },
-      {
-        Header: 'Phone Code',
-        accessor: 'phonecode',
-      },
+      // {
+      //   Header: 'Country Code',
+      //   accessor: 'countrycode',
+      // },
+      // {
+      //   Header: 'Phone Code',
+      //   accessor: 'phonecode',
+      // },
     ],
     []
   );
-  const data = useMemo(
-    () => [
-      {
-        id: 1,
-        country: 'INDIA',
-        countrycode: 'IND',
-        phonecode: '+91',
-      },
-      {
-        id: 2,
-        country: 'Germany',
-        countrycode: 'GER',
-        phonecode: '+123',
-      },
-    ],
-    []
-  );
+  // const data = useMemo(
+  //   () => [
+  //     {
+  //       id: 1,
+  //       country: 'INDIA',
+  //       countrycode: 'IND',
+  //       phonecode: '+91',
+  //     },
+  //     {
+  //       id: 2,
+  //       country: 'Germany',
+  //       countrycode: 'GER',
+  //       phonecode: '+123',
+  //     },
+  //   ],
+  //   []
+  // );
 
   return (
     <>
@@ -81,6 +81,9 @@ export default function Country() {
 }
 
 export async function getServerSideProps(context) {
+  const response = await fetch('http://localhost:4000/members');
+  const data = await response.json();
+
   const session = await getSession({ req: context.req });
   if (!session) {
     return {
@@ -92,6 +95,8 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: {},
+    props: {
+      data,
+    },
   };
 }

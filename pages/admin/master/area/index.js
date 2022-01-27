@@ -8,7 +8,7 @@ import BreadCrumb from '@thinxview/ui/BreadCrumb';
 import CommonTable from '../../../../thinxview/components/CommonTable';
 import { getSession } from 'next-auth/react';
 
-export default function Area() {
+export default function Area({ data }) {
   const columns = useMemo(
     () => [
       {
@@ -21,38 +21,38 @@ export default function Area() {
       },
       {
         Header: 'State Name',
-        accessor: 'statename',
+        accessor: 'state',
       },
       {
         Header: 'City Name',
-        accessor: 'cityname',
+        accessor: 'city',
       },
       {
         Header: 'Area Name',
-        accessor: 'areaname',
+        accessor: 'area',
       },
     ],
     []
   );
-  const data = useMemo(
-    () => [
-      {
-        id: 1,
-        country: 'INDIA',
-        statename: 'TamilNadu',
-        cityname: 'Salem',
-        areaname: 'Mettur',
-      },
-      {
-        id: 2,
-        country: 'INDIA',
-        statename: 'TamilNadu',
-        cityname: 'Salem',
-        areaname: 'Omalur',
-      },
-    ],
-    []
-  );
+  // const data = useMemo(
+  //   () => [
+  //     {
+  //       id: 1,
+  //       country: 'INDIA',
+  //       statename: 'TamilNadu',
+  //       cityname: 'Salem',
+  //       areaname: 'Mettur',
+  //     },
+  //     {
+  //       id: 2,
+  //       country: 'INDIA',
+  //       statename: 'TamilNadu',
+  //       cityname: 'Salem',
+  //       areaname: 'Omalur',
+  //     },
+  //   ],
+  //   []
+  // );
 
   return (
     <>
@@ -86,6 +86,9 @@ export default function Area() {
 }
 
 export async function getServerSideProps(context) {
+  const response = await fetch('http://localhost:4000/members');
+  const data = await response.json();
+
   const session = await getSession({ req: context.req });
   if (!session) {
     return {
@@ -97,6 +100,8 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: {},
+    props: {
+      data,
+    },
   };
 }

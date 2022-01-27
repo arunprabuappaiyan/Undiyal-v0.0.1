@@ -8,7 +8,7 @@ import BreadCrumb from '@thinxview/ui/BreadCrumb';
 import CommonTable from '../../../../thinxview/components/CommonTable';
 import { getSession } from 'next-auth/react';
 
-export default function City() {
+export default function City({ data }) {
   const columns = useMemo(
     () => [
       {
@@ -21,32 +21,32 @@ export default function City() {
       },
       {
         Header: 'State Name',
-        accessor: 'statename',
+        accessor: 'state',
       },
       {
         Header: 'City Name',
-        accessor: 'cityname',
+        accessor: 'city',
       },
     ],
     []
   );
-  const data = useMemo(
-    () => [
-      {
-        id: 1,
-        country: 'INDIA',
-        statename: 'TamilNadu',
-        cityname: 'Salem',
-      },
-      {
-        id: 2,
-        country: 'INDIA',
-        statename: 'TamilNadu',
-        cityname: 'Chennai',
-      },
-    ],
-    []
-  );
+  // const data = useMemo(
+  //   () => [
+  //     {
+  //       id: 1,
+  //       country: 'INDIA',
+  //       statename: 'TamilNadu',
+  //       cityname: 'Salem',
+  //     },
+  //     {
+  //       id: 2,
+  //       country: 'INDIA',
+  //       statename: 'TamilNadu',
+  //       cityname: 'Chennai',
+  //     },
+  //   ],
+  //   []
+  // );
 
   return (
     <>
@@ -80,6 +80,9 @@ export default function City() {
 }
 
 export async function getServerSideProps(context) {
+  const response = await fetch('http://localhost:4000/members');
+  const data = await response.json();
+
   const session = await getSession({ req: context.req });
   if (!session) {
     return {
@@ -91,6 +94,8 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: {},
+    props: {
+      data,
+    },
   };
 }
